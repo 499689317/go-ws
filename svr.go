@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gorilla/websocket"
 	"github.com/499689317/go-log"
+	"github.com/gorilla/websocket"
 )
 
 type WHandler struct {
@@ -111,7 +111,7 @@ func (s *WServer) Run() {
 	// WHandler
 	s.ln = ln
 	s.h = &WHandler{
-		conns: make(map[*websocket.Conn]struct{}),
+		conns:   make(map[*websocket.Conn]struct{}),
 		connNum: s.ConnNum,
 		bufLen:  s.BufLen,
 		msgLen:  s.MsgLen,

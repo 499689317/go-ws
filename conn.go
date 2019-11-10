@@ -1,12 +1,12 @@
 package ws
 
 import (
+	"errors"
 	"net"
 	"sync"
-	"errors"
 
-	"github.com/gorilla/websocket"
 	"github.com/499689317/go-log"
+	"github.com/gorilla/websocket"
 )
 
 type WConn struct {

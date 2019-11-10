@@ -1,4 +1,4 @@
-module go-ws
+module github.com/499689317/go-ws
 
 go 1.13
 

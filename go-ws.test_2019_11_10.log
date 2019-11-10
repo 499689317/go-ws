@@ -1,0 +1,23 @@
+{"level":"info","time":"2019-11-10T16:12:36+08:00","caller":"/Users/devin/Documents/gopath/pkg/mod/github.com/499689317/go-log@v0.0.0-20191110070827-125a3c33e0f9/log.go:39","message":"log init ok"}
+{"level":"info","time":"2019-11-10T16:12:36+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/ws.go:36","message":"start ws server ok"}
+{"level":"info","time":"2019-11-10T16:12:44+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/svr.go:63","message":"new client connection"}
+{"level":"info","msg: ":"this is ws client msg 0.8393483141304527","time":"2019-11-10T16:12:45+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.602573766465317","time":"2019-11-10T16:12:46+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.17387638626845203","time":"2019-11-10T16:12:47+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.3380717304466869","time":"2019-11-10T16:12:48+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.4866813544000854","time":"2019-11-10T16:12:49+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.48985572493774554","time":"2019-11-10T16:12:50+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.6228377085667778","time":"2019-11-10T16:12:51+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.33037415594695485","time":"2019-11-10T16:12:52+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.6518410204607166","time":"2019-11-10T16:12:53+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.3627783103632223","time":"2019-11-10T16:12:54+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.1872195620852788","time":"2019-11-10T16:12:55+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"info","msg: ":"this is ws client msg 0.28198022158705394","time":"2019-11-10T16:12:56+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:63","message":"receive byte"}
+{"level":"error","error":"websocket: close 1006 (abnormal closure): unexpected EOF","time":"2019-11-10T16:12:56+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:58","message":"read byte error"}
+{"level":"info","time":"2019-11-10T16:12:56+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/svr.go:69","message":"track conn destroy //// close client connection"}
+{"level":"info","time":"2019-11-10T16:12:56+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:131","message":"track conn destroy //// WConn Close connection"}
+{"level":"info","time":"2019-11-10T16:12:56+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:32","message":"track conn destroy //// receive nil value exit range writeChan"}
+{"level":"info","time":"2019-11-10T16:12:56+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:44","message":"track conn destroy //// WConn newWConn exit writeChan do conn.Close"}
+{"level":"info","time":"2019-11-10T16:12:56+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/conn.go:138","message":"track conn destroy //// WConn doDestroy connection"}
+{"level":"info","time":"2019-11-10T16:13:51+08:00","caller":"/Users/devin/Documents/gopath/pkg/mod/github.com/499689317/go-log@v0.0.0-20191110070827-125a3c33e0f9/log.go:39","message":"log init ok"}
+{"level":"info","time":"2019-11-10T16:13:51+08:00","caller":"/Users/devin/Documents/gopath/src/go-ws/ws.go:36","message":"start ws server ok"}

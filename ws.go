@@ -7,6 +7,14 @@ import (
 	"github.com/499689317/go-log"
 )
 
+type Configurable interface {
+	WSListenAddr() string
+	WSConnNum() int
+	WSBufLen() int
+	WSMsgLen() uint32
+	WSTimeout() time.Duration
+}
+
 type WebSocket struct {
 	Addr     string
 	ConnNum  int
@@ -14,6 +22,22 @@ type WebSocket struct {
 	MsgLen   uint32
 	Timeout  time.Duration
 	killChan chan bool
+	config   Configurable
+}
+
+func NewWebSocket(c Configurable) *WebSocket {
+
+	w := &WebSocket{
+		Addr:    c.WSListenAddr(),
+		ConnNum: c.WSConnNum(),
+		BufLen:  c.WSBufLen(),
+		MsgLen:  c.WSMsgLen(),
+		Timeout: c.WSTimeout(),
+	}
+
+	w.config = c
+
+	return w
 }
 
 func (w *WebSocket) Run() error {

@@ -21,7 +21,7 @@ type WebSocket struct {
 	BufLen   int
 	MsgLen   uint32
 	Timeout  time.Duration
-	killChan chan bool
+	done chan struct{}
 	config   Configurable
 }
 
@@ -47,7 +47,7 @@ func (w *WebSocket) Run() error {
 		return errors.New("websocket addr error")
 	}
 
-	w.killChan = make(chan bool)
+	w.done = make(chan struct{})
 
 	s = new(WServer)
 	s.Addr = w.Addr
@@ -57,16 +57,16 @@ func (w *WebSocket) Run() error {
 	s.Timeout = w.Timeout
 
 	s.Run()
-	log.Info().Msg("start ws server ok")
-	<-w.killChan
+	log.Info().Str("Listen At", s.Addr).Int("ConnNum", s.ConnNum).Msg("start server ok")
+	<-w.done
 
 	s.Close()
 	return nil
 }
 
 func (w *WebSocket) Close() {
-	w.killChan <- true
-	close(w.killChan)
+	w.done <- struct{}{}
+	close(w.done)
 }
 
 // // 对外代理层

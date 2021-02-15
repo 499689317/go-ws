@@ -32,6 +32,7 @@ func (c *conf) WSTimeout() time.Duration {
 	return c.WsTimeout
 }
 
+/*
 func TestNewWebSocketServer(t *testing.T) {
 
 	c := &conf{
@@ -45,6 +46,7 @@ func TestNewWebSocketServer(t *testing.T) {
 	s := NewWebSocket(c)
 	s.Run()
 }
+*/
 
 func TestWebSocketServer(t *testing.T) {
 
@@ -54,9 +56,9 @@ func TestWebSocketServer(t *testing.T) {
 
 	s := new(WebSocket)
 	s.Addr = ":8888"
-	s.ConnNum = 1000
-	s.BufLen = 100
-	s.MsgLen = 1000
+	s.ConnNum = 3000
+	s.BufLen = 1024
+	s.MsgLen = 1024
 	s.Timeout = 10 * time.Second
 	s.Run()
 }

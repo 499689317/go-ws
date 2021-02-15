@@ -4,9 +4,10 @@ import (
 	"errors"
 	"net"
 	"sync"
-
-	"github.com/499689317/go-log"
+	//"fmt"
 	"github.com/gorilla/websocket"
+	"github.com/499689317/go-log"
+	"github.com/499689317/go-coding"
 )
 
 type WConn struct {
@@ -17,32 +18,23 @@ type WConn struct {
 }
 
 func newWConn(conn *websocket.Conn, bufLen int, msgLen uint32) *WConn {
-
 	wConn := new(WConn)
 	wConn.conn = conn
-	// 带缓冲区的写入通道
 	wConn.writeChan = make(chan []byte, bufLen)
 	wConn.msgLen = msgLen
-
 	go func() {
 		// TODO 使用range来读取channel时，range可以感知channel的关闭，当channel关闭时，range就会结束并退出for循环
 		for x := range wConn.writeChan {
-			// nil退出信号
 			if x == nil {
-				log.Info().Msg("track conn destroy //// receive nil value exit range writeChan")
+				log.Info().Msg("exit conn")
 				break
 			}
 			e := conn.WriteMessage(websocket.BinaryMessage, x)
 			if e != nil {
-				// 写入错误
-				log.Info().Msg("track conn destroy //// WriteMessage error exit range writeChan")
 				break
 			}
 		}
-
 		// TODO 退出连接，清空writeChan后关闭连接
-		log.Info().Msg("track conn destroy //// WConn newWConn exit writeChan do conn.Close")
-		// conn.Close()
 		wConn.doDestroy()
 
 	}()
@@ -51,16 +43,18 @@ func newWConn(conn *websocket.Conn, bufLen int, msgLen uint32) *WConn {
 }
 
 func (c *WConn) Run() {
+	ecode := coding.NewCoding()
 	for {
-
 		x, e := c.Read()
 		if e != nil {
 			log.Error().Err(e).Msg("read byte error")
 			break
 		}
-
-		// TODO 将消息透传到业务层
-		log.Info().Str("msg: ", string(x)).Msg("receive byte")
+		l, e := ecode.Redecode(x)
+		for _, v := range l {
+			m := v.(*coding.Message)
+			log.Info().Uint16("Size", m.Size).Uint16("Version", m.Version).Uint16("Server", m.Server).Uint32("TimeStamp", m.TimeStamp).Msg("byte decode")
+		}
 	}
 }
 
@@ -124,31 +118,21 @@ func (c *WConn) Write(x ...[]byte) error {
 
 // close connection TODO this is soft quite
 func (c *WConn) Close() {
-
 	c.mu.Lock()
 	defer c.mu.Unlock()
-
-	log.Info().Msg("track conn destroy //// WConn Close connection")
 	c.doWrite(nil)
 }
 
 // destroy connection TODO this is hard quite
 func (c *WConn) doDestroy() {
-
-	log.Info().Msg("track conn destroy //// WConn doDestroy connection")
-
 	c.conn.UnderlyingConn().(*net.TCPConn).SetLinger(0)
 	c.conn.Close()
-
 	// 关闭writeChan
 	// TODO channel不需要通过close来释放资源，只要没有goroutine持有channel,相关资源会自动释放
 	close(c.writeChan)
 }
 func (c *WConn) Destroy() {
-
 	c.mu.Lock()
 	defer c.mu.Unlock()
-
-	log.Info().Msg("track conn destroy //// WConn Destroy connection")
 	c.doDestroy()
 }

@@ -24,7 +24,6 @@ type WHandler struct {
 func (h *WHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "GET" {
-		// return errors.New("request error")
 		return
 	}
 
@@ -45,14 +44,12 @@ func (h *WHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if h.conns == nil {
 		h.mu.Unlock()
 		c.Close()
-		// return errors.New("h conns nil error")
 		return
 	}
 	// 判断是否超出最大连接限制
 	if len(h.conns) >= h.connNum {
 		h.mu.Unlock()
 		c.Close()
-		// return errors.New("limit connection")
 		return
 	}
 	h.conns[c] = struct{}{}
@@ -60,13 +57,10 @@ func (h *WHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// 封装conn，方便后期使用
 	o := newWConn(c, h.bufLen, h.msgLen)
-	log.Info().Msg("new client connection")
-	// TODO 读取客户端消息-------
-
+	log.Info().Msg("new client connect")
+	
 	o.Run()
 
-	// close connection
-	log.Info().Msg("track conn destroy //// close client connection")
 	o.Close()
 	h.mu.Lock()
 	delete(h.conns, c)
@@ -87,21 +81,20 @@ func (s *WServer) Run() {
 
 	ln, e := net.Listen("tcp", s.Addr)
 	if e != nil {
-		// 终止进程
-		log.Fatal().Err(e).Msg("net listener error")
+		panic("net listener error")
 	}
 
 	// 默认3000最大连接数
 	if s.ConnNum <= 0 {
 		s.ConnNum = 3000
 	}
-	// 默认写入500字节缓冲区
+	// 默认写入1kb字节缓冲区
 	if s.BufLen <= 0 {
-		s.BufLen = 500
+		s.BufLen = 1024
 	}
-	// 默认最大写入消息大小4kb
+	// 默认最大写入消息大小2kb
 	if s.MsgLen <= 0 {
-		s.MsgLen = 4096
+		s.MsgLen = 2048
 	}
 	// 默认连接超时时间30s
 	if s.Timeout <= 0 {
